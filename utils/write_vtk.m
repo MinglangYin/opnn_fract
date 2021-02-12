@@ -1,6 +1,6 @@
 function write_vtk(npoin,nelem,nnode,lnods,coord,istep,cont1,displacement,folder_name)
 
-fname = [folder_name,'\time',num2str(istep),'.vtk'];
+fname = [folder_name,'/time',num2str(istep),'.vtk'];
 out = fopen(fname,'w');
 
 % Start writing:

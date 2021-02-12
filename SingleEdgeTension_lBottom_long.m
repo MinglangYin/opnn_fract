@@ -11,7 +11,7 @@ dfactoSteps = [1e-05, 1.1e-04, 4.2e-04, 6.1e-04, 9.1e-04, 1e-03];
 curDir = pwd;
 for iFacto = 1: length(dfactoSteps)
     
-    folder_name = [curDir '\dFacto' num2str(iFacto)];%new folder name
+    folder_name = [curDir '/dFacto' num2str(iFacto)];%new folder name
     mkdir(folder_name)
     dfacto = dfactoSteps(iFacto);
     Input = @() Input_tensilePlate(dfacto);
@@ -22,7 +22,7 @@ for iFacto = 1: length(dfactoSteps)
     PF.Trac = @(stiffUU,tdisp,Integ,dirichlet,file_name)compTreacTension(stiffUU,tdisp,...
         Integ,dirichlet,file_name);
     
-    file_name = [folder_name,'\FD-tensile.txt'];
+    file_name = [folder_name,'/FD-tensile.txt'];
     output = fopen(file_name,'w');
     fprintf(output,'%14.6e %14.6e\n',0,0);
     fclose(output);  
