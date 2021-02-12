@@ -47,6 +47,6 @@ if Integ.nstep <= 20
 elseif Integ.nstep <= 100  
     Integ.nprint = 10; % Printing the results after how many steps
 else  
-    Integ.nprint = 1; % Printing the results after how many steps
+    Integ.nprint = 30; % Printing the results after how many steps
 end
 end

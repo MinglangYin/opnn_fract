@@ -96,7 +96,7 @@ for istep = 1:Integ.nstep+1
     if(mod(istep,Integ.nprint) == 0)% Print results
         u = [u, tdisp(1:2:2*sizeBasis)];
         v = [v, tdisp(2:2:2*sizeBasis)];
-        phi = [phi, tdisp(2*sizeBasis+1:end)];       
+        phi = [phi, tdisp(2*sizeBasis+1:end)];        
         fprintf('Done step: %5d\n',istep);
         plotDispPhase2D(PHTelem,tdisp,sizeBasis,numberElements,geometry,controlPts,Mater,istep,folder_name);
     end %if
