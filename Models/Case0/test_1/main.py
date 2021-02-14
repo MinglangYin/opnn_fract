@@ -24,12 +24,12 @@ def main():
     batch_size = args.batch_size
     restart = args.restart
 
-    dim_br = [450, 50, 50, 50]
+    dim_br = [2, 50, 50, 50]
     dim_tr = [3, 50, 50, 50]
     lmd = 1e-5
 
-    num_train = 4
-    num_test = 4
+    num_train = 6
+    num_test = 2
     loading_steps = 8
     id_test = 450*num_test*loading_steps
     id_train = 450*num_train*loading_steps
@@ -45,6 +45,7 @@ def main():
     ## dataset
     dataset = io.loadmat('../dataset.mat')
     phi0 = dataset['phi_init_train']
+
     x = dataset['x_train']
     force = dataset['stress_train']*100
     x = np.concatenate((x, force), axis=1)
@@ -231,8 +232,8 @@ def main():
         phi_true_plt = y_test[i*450:(i+1)*450, 0]
         phi_pred_plt = phi_pred[i*450:(i+1)*450, 0]
 
-        fig = plt.figure(constrained_layout=False, figsize=(7, 7))
-        gs = fig.add_gridspec(2, 2)
+        fig = plt.figure(constrained_layout=False, figsize=(11, 3))
+        gs = fig.add_gridspec(1, 3)
         ax = fig.add_subplot(gs[0])
         h = ax.scatter(x_plt, y_plt, c = phi_pred_plt, cmap='coolwarm')
         ax.set_title('Testing case (Pred): ' + str(i))
@@ -246,15 +247,9 @@ def main():
         fig.colorbar(h, ax=ax)
 
         ax = fig.add_subplot(gs[2])
-        h = ax.scatter(x_plt, y_plt, c = phi0_plt, cmap='coolwarm')
-        ax.set_title('Testing case (init): ' + str(i))
-        h.set_clim(vmin=0, vmax=1)
-        fig.colorbar(h, ax=ax)
-
-        ax = fig.add_subplot(gs[3])
         h = ax.scatter(x_plt, y_plt, c = abs(phi_true_plt - phi_pred_plt), cmap='coolwarm')
         ax.set_title('Testing case (Abs Diff): ' + str(i))
-        h.set_clim(vmin=0, vmax=0.1)
+        h.set_clim(vmin=0, vmax=0.2)
         fig.colorbar(h, ax=ax)
 
         fig.savefig(dump_test + '/img_' + str(i) + '.png')
@@ -268,12 +263,11 @@ def main():
 
         x_plt = x_train[i*450:(i+1)*450, 0]
         y_plt = x_train[i*450:(i+1)*450, 1]
-        phi0_plt = phi0_train[i*450, :]
         phi_true_plt = y_train[i*450:(i+1)*450, 0]
-        phi_pred_plt = phi_pred[i*450:(i+1)*450, 0]
+        phi_pred_plt = phi_train[i*450:(i+1)*450, 0]
 
-        fig = plt.figure(constrained_layout=False, figsize=(7, 7))
-        gs = fig.add_gridspec(2, 2)
+        fig = plt.figure(constrained_layout=False, figsize=(11, 3))
+        gs = fig.add_gridspec(1, 3)
 
         ax = fig.add_subplot(gs[0])
         h = ax.scatter(x_plt, y_plt, c = phi_pred_plt, cmap='coolwarm')
@@ -288,15 +282,9 @@ def main():
         fig.colorbar(h, ax=ax)
 
         ax = fig.add_subplot(gs[2])
-        h = ax.scatter(x_plt, y_plt, c = phi0_plt, cmap='coolwarm')
-        ax.set_title('Testing case (init): ' + str(i))
-        h.set_clim(vmin=0, vmax=1)
-        fig.colorbar(h, ax=ax)
-
-        ax = fig.add_subplot(gs[3])
         h = ax.scatter(x_plt, y_plt, c = abs(phi_true_plt - phi_pred_plt), cmap='coolwarm')
         ax.set_title('Testing case (Abs Diff): ' + str(i))
-        h.set_clim(vmin=0, vmax=0.1)
+        h.set_clim(vmin=0, vmax=0.2)
         fig.colorbar(h, ax=ax)
 
         fig.savefig(dump_train+ '/img_' + str(i) + '.png')
