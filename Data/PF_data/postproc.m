@@ -19,6 +19,11 @@ for name = file_name
     count = count + 1;
 end
 
+% for i =1:9
+%     scatter(x, y, [], phi_init(:, i))
+% end
+
+
 force_df1 = load("Supplementary/loading_f_df1.txt");
 
 %%
@@ -51,8 +56,7 @@ for i = 1:9
     count = count + 1;
 end
 
-%%
-intv = 25;
+intv = 10;
 for i = 1:9
     phi{i} = phi{i}(1:intv:end, :);
     u{i} = u{i}(1:intv:end, :);
@@ -69,7 +73,7 @@ for i = 1:9
     v{i} = v{i}(:, 1:int_step:end);
 end
 force_df1 = force_df1(1:int_step:end);
-scatter(x, y, [], phi_init(:, 1))
+% scatter(x, y, [], phi_init(:, 1))
 
 %%
 num_1 = ceil(11236/intv);
@@ -81,6 +85,11 @@ for i = 1:9
         phi_init_train( (i-1)*(num_1*num_f)+j, :) = phi_init(:, i)';
     end
 end
+
+for i = 1:10
+scatter(x, y, [], phi_init_train(i, :))
+end
+
 for i = 1:num_f*9
     x_train((i-1)*num_1+1:i*num_1, 1) = x;
     x_train((i-1)*num_1+1:i*num_1, 2) = y;
