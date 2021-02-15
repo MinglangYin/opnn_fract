@@ -14,7 +14,6 @@ numberElemV = geometry.numElemV;
 controlPts = cell(numPatches,1);
 PHTelem = cell(numPatches, 1);
 dimBasis = zeros(1, numPatches);
-quadList = cell(numPatches,1);
 % Divide the patches along the x direction
 xVertices = linspace(0,L,numPatches+1);
 for patchIndex = 1:numPatches
@@ -52,6 +51,6 @@ for patchIndex = 1:numPatches
     nurbs = nrbkntins(nurbs,{knotU(2:end-1) knotV(2:end-1)});
     % Repeat the knots to get C1 continuity
     nurbs = nrbkntins(nurbs,{knotU(2:end-1) knotV(2:end-1)});
-    [controlPts{patchIndex},PHTelem{patchIndex},dimBasis(patchIndex),quadList{patchIndex}] = genControlPtsNoRep(nurbs,p,q,numberElementsU,numberElementsV);
+    [controlPts{patchIndex},PHTelem{patchIndex},dimBasis(patchIndex)] = genControlPtsNoRepNoRef(nurbs,p,q,numberElementsU,numberElementsV);
 
 end
