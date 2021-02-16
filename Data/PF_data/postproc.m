@@ -11,28 +11,32 @@ file_name = ["initPhi", "initPhi_lBottom", "initPhi_lBottom_long", "initPhi_lBot
     "initPhi_long", "initPhi_short", "initPhi_uBottom", "initPhi_uBottom_long", ...
     "initPhi_uBottom_short"];
 
-% count = 1;
-% for name = file_name
-%     file_name = strcat("Supplementary/", name, ".mat"); 
-%     data = load(file_name);
-%     phi_init(:, count) = data.Phi;
-%     count = count + 1;
-% end
-% 
-% for i =1:9
-%     scatter(x, y, [], phi_init(:, i))
-% end
+count = 1;
+for name = file_name
+    file_name = strcat("Supplementary/", name, ".mat"); 
+    data = load(file_name);
+    phi_init(:, count) = data.Phi;
+    count = count + 1;
+end
 
-phi_init = [0.5, 0.5; 
-        0.2, 0.5;
-        0.2, 0.65;
-        0.2, 0.3;
-        0.5, 0.65;
-        0.5, 0.3;
-        0.35, 0.5;
-        0.35, 0.65;
-        0.35, 0.3];
-phi_init = phi_init';
+
+exit()
+for i =1:9
+    scatter(x, y, [], phi_init(:, i))
+end
+
+
+
+% phi_init = [0.5, 0.5; 
+%         0.2, 0.5;
+%         0.2, 0.65;
+%         0.2, 0.3;
+%         0.5, 0.65;
+%         0.5, 0.3;
+%         0.35, 0.5;
+%         0.35, 0.65;
+%         0.35, 0.3];
+% phi_init = phi_init';
 
 
 force_df1 = load("Supplementary/loading_f_df1.txt");
@@ -54,6 +58,7 @@ force_df1 = load("Supplementary/loading_f_df1.txt");
 %     end
 % end
 
+%%
 u = {};
 v = {};
 phi = {};
