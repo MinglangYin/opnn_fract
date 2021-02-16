@@ -19,13 +19,9 @@ for name = file_name
     count = count + 1;
 end
 
-
-exit()
 for i =1:9
     scatter(x, y, [], phi_init(:, i))
 end
-
-
 
 % phi_init = [0.5, 0.5; 
 %         0.2, 0.5;
