@@ -18,7 +18,7 @@ geometry.numElemV = 55;
 geometry.toler = 1e-4;
 geometry.ngaussX = geometry.p+1;
 geometry.ngaussY = geometry.q+1;
-geometry.maxRefLevel = 1;
+geometry.maxRefLevel = 0;
 geometry.threshPhi = 0.5; % Threshold for Refinement 
 geometry.B = 1e3;% Parameter for initial history function
 
