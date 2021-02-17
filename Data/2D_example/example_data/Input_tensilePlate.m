@@ -8,13 +8,13 @@ geometry.nstress = 3; % Number of stress components.
 geometry.patchBoundaries = {};
 
 % Consider cubic B-Splines
-geometry.p = 1; % Degree of the polynomial in U Direction
-geometry.q = 1; % Degree of the polynomial in V Direction
+geometry.p = 3; % Degree of the polynomial in U Direction
+geometry.q = 3; % Degree of the polynomial in V Direction
 geometry.L = 1; % Length of the plate in the X direction
 geometry.W = 1; % Width of the plate in the Y direction
 geometry.numPatches = 1; % Total number of patches
-geometry.numElemU = 55; % Initial mesh
-geometry.numElemV = 55;
+geometry.numElemU = 60; % Initial mesh
+geometry.numElemV = 60;
 geometry.toler = 1e-4;
 geometry.ngaussX = geometry.p+1;
 geometry.ngaussY = geometry.q+1;
