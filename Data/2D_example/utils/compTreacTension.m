@@ -20,7 +20,7 @@ for ivfix = 1:fixedPts
     end
 end
 
-treacTemp = -stiffUU(rowSet, :)*tdisp;
+treacTemp = stiffUU(rowSet, :)*tdisp;
 sumr = sum(treacTemp);
 
 %open file for writing (append)
