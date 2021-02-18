@@ -1,0 +1,50 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 457400
+##  Job Name : MyMatlabJob
+##  Nodelist : node1321
+##      CPUs : 
+##  Mem/Node : 4096 MB
+## Directory : /gpfs/scratch/myin2/opnn_fract/Data/2D_example/Bimaterial/test_2
+##   Started : Thu Feb 18 10:07:06 EST 2021
+###############################################################################
+
+Starting MATLAB in single-threaded, command-line mode...
+To launch the MATLAB GUI or to run with multiple threads, use 'matlab-threaded'.
+
+If you have any questions about how to correctly run MATLAB on Oscar, see
+
+https://www.ccv.brown.edu/doc/matlab.html
+
+or contact 'support@ccv.brown.edu'.
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017b (9.3.0.713579) 64-bit (glnxa64)
+                             September 14, 2017
+
+ 
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+[Warning: The value '' is not valid\nfor the environment variable
+MATLAB_SYMBOLIC.\nSee 'help matlab_symbolic' for more information.] 
+[> In matlabrc (line 244)] 
+[Warning: Name is nonexistent or not a directory: ../../nurbs/inst] 
+[> In path (line 109)
+  In addpath (line 94)
+  In Bimaterial_center (line 8)] 
+{Undefined function or variable 'nrbmak'.
+
+Error in initMeshTensile (line 38)
+    nurbs = nrbmak(coefs,{knotU,knotV});
+
+Error in Bimaterial_center>@(geometry)initMeshTensile(geometry)
+
+Error in solver_2nd_bimaterial (line 5)
+[PHTelem,controlPts,dimBasis] = PF.Geometry(geometry);
+
+Error in Bimaterial_center (line 39)
+    solver_2nd_bimaterial(Input,PF,file_name,folder_name,iFacto);
+} 
+>> 

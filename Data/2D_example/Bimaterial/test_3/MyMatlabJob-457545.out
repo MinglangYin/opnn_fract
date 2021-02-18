@@ -1,0 +1,600 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 457545
+##  Job Name : MyMatlabJob
+##  Nodelist : node1301
+##      CPUs : 
+##  Mem/Node : 4096 MB
+## Directory : /gpfs/scratch/myin2/opnn_fract/Data/2D_example/Bimaterial/test_3
+##   Started : Thu Feb 18 11:16:46 EST 2021
+###############################################################################
+
+Starting MATLAB in single-threaded, command-line mode...
+To launch the MATLAB GUI or to run with multiple threads, use 'matlab-threaded'.
+
+If you have any questions about how to correctly run MATLAB on Oscar, see
+
+https://www.ccv.brown.edu/doc/matlab.html
+
+or contact 'support@ccv.brown.edu'.
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017b (9.3.0.713579) 64-bit (glnxa64)
+                             September 14, 2017
+
+ 
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+[Warning: The value '' is not valid\nfor the environment variable
+MATLAB_SYMBOLIC.\nSee 'help matlab_symbolic' for more information.] 
+[> In matlabrc (line 244)] 
+[Warning: Directory already exists.] 
+[> In Bimaterial_center_long1 (line 15)] 
+Initializing boundary conditions on the initial geometry.
+Precomputing shape functions and derivatives.
+History function and phase field initialization.
+
+istep =
+
+     1
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+     1
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   7.7547e-09
+
+Print data for force-tdisp curves.
+Displacement: 0.0001 Reaction force: -18.8964
+
+istep =
+
+     2
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   4.4117e-08
+
+Print data for force-tdisp curves.
+Displacement: 0.0002 Reaction force: -37.7929
+
+istep =
+
+     3
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   7.5134e-08
+
+Print data for force-tdisp curves.
+Displacement: 0.0003 Reaction force: -56.6891
+
+istep =
+
+     4
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   1.0521e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0004 Reaction force: -75.585
+
+istep =
+
+     5
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   1.3527e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0005 Reaction force: -94.4804
+
+istep =
+
+     6
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   1.6533e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0006 Reaction force: -113.3751
+
+istep =
+
+     7
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   1.9540e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0007 Reaction force: -132.2691
+
+istep =
+
+     8
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   2.2546e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0008 Reaction force: -151.1622
+
+istep =
+
+     9
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   2.5553e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0009 Reaction force: -170.0543
+
+istep =
+
+    10
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   2.8560e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.001 Reaction force: -188.9452
+
+istep =
+
+    11
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   3.1567e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0011 Reaction force: -207.8347
+
+istep =
+
+    12
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   3.4574e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0012 Reaction force: -226.7227
+
+istep =
+
+    13
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   3.7582e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0013 Reaction force: -245.6091
+
+istep =
+
+    14
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   4.0590e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0014 Reaction force: -264.4937
+
+istep =
+
+    15
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   4.3598e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0015 Reaction force: -283.3765
+
+istep =
+
+    16
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   4.6607e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0016 Reaction force: -302.2571
+
+istep =
+
+    17
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   4.9616e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0017 Reaction force: -321.1356
+
+istep =
+
+    18
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   5.2626e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0018 Reaction force: -340.0117
+
+istep =
+
+    19
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   5.5636e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0019 Reaction force: -358.8854
+
+istep =
+
+    20
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   5.8647e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.002 Reaction force: -377.7564
+
+istep =
+
+    21
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   6.1658e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0021 Reaction force: -396.6246
+
+istep =
+
+    22
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   6.4669e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0022 Reaction force: -415.4899
+
+istep =
+
+    23
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   6.7682e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0023 Reaction force: -434.3522
+
+istep =
+
+    24
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   7.0695e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0024 Reaction force: -453.2112
+
+istep =
+
+    25
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   7.3708e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0025 Reaction force: -472.0669
+
+istep =
+
+    26
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   7.6722e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0026 Reaction force: -490.9191
+
+istep =
+
+    27
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   7.9737e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0027 Reaction force: -509.7677
+
+istep =
+
+    28
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   8.2753e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0028 Reaction force: -528.6125
+
+istep =
+
+    29
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   8.5769e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0029 Reaction force: -547.4534
+
+istep =
+
+    30
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   8.8786e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.003 Reaction force: -566.2902
+
+istep =
+
+    31
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   9.1804e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0031 Reaction force: -585.1229
+
+istep =
+
+    32
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   9.4823e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0032 Reaction force: -603.9511
+
+istep =
+
+    33
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   9.7843e-07
+
+Print data for force-tdisp curves.
+Displacement: 0.0033 Reaction force: -622.7749
+
+istep =
+
+    34
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+
+normInnerStep =
+
+   1.0086e-06
+
+Print data for force-tdisp curves.
+Displacement: 0.0034 Reaction force: -641.594
+
+istep =
+
+    35
+
+Assembling the stiffness matrix.
+Imposing boundary conditions and solving.
+Update the internal forces.
+Updating phase field.
+slurmstepd: error: *** JOB 457545 ON node1301 CANCELLED AT 2021-02-18T11:19:03 ***

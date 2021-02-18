@@ -5,7 +5,7 @@ clear
 
 addpath('../utils')
 addpath('../example_data')
-addpath('../../nurbs/inst')
+addpath('../../../nurbs/inst')
 
 dfactoSteps = [1e-04, 7.1e-04, 1.1e-03, 3.1e-03, 1e-02];
 curDir = pwd;
