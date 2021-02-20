@@ -6,7 +6,7 @@ out = fopen(fname,'w');
 % Start writing:
 % Header
 fprintf(out,'# vtk DataFile Version 2.0\n');
-fprintf(out,'time_10.vtk\n');
+fprintf(out,'time_%d.vtk\n',istep);
 fprintf(out,'ASCII\n');
 fprintf(out,'DATASET UNSTRUCTURED_GRID\n');
 
