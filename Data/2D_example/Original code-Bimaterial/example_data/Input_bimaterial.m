@@ -44,7 +44,7 @@ Fract.s = 1e-4; % Cubic degradation parameter
 
 % Time Integration Paramenters
 Integ = struct;
-Integ.nstep=2000; % Number of Displacement steps
+Integ.nstep=20000; % Number of Displacement steps
 Integ.tfacto = 0; % Total increment factor for displacement increment
 Integ.dfacto1 = 1e-4; % Displacement increment per time steps upto numStepsLimit
 Integ.dfacto2 = 1e-5; % Displacement increment per time steps
