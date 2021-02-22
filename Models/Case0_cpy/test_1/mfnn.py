@@ -55,8 +55,8 @@ class opnn(nn.Module):
         self.branch_dim = branch_dim
         self.trunk_dim = trunk_dim
         self.z_dim = trunk_dim[-1]
-        self.ll_x = 1
-        self.ll_y = 1
+        self.ll_x = 3
+        self.ll_y = 3
 
         ## build branch net
         modules = []

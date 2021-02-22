@@ -32,8 +32,9 @@ def main():
     num_cases = 9
     num_test = 2
     num_train = 7
-    size_filter = 11
+    size_filter = 5
     if_gauss_filter = 1
+    phi_scaling = 10
 
     Param = {}
     Param['loading_steps'] = loading_steps
@@ -55,8 +56,8 @@ def main():
     img_train, x_train, y_train, img_test, x_test, y_test = prep_train_test(Param)
 
     ## scaling
-    y_train = y_train*10
-    y_test = y_test*10
+    y_train = y_train*phi_scaling
+    y_test = y_test*phi_scaling
 
     ##
     img_train_tensor = torch.tensor(img_train, dtype=torch.float).to(device)
@@ -145,19 +146,19 @@ def main():
         gs = fig.add_gridspec(1, 3)
 
         ax = fig.add_subplot(gs[0])
-        h = ax.imshow(phi_pred[i][0], cmap='coolwarm')
+        h = ax.imshow(phi_pred[i][0]/phi_scaling, cmap='coolwarm')
         ax.set_title('Testing case (Pred): ' + str(i))
         h.set_clim(vmin=0, vmax=1)
         fig.colorbar(h, ax=ax)
 
         ax = fig.add_subplot(gs[1])
-        h = ax.imshow(phi_true[i][0], cmap='coolwarm')
-        ax.set_title('Testing case (Pred): ' + str(i))
+        h = ax.imshow(phi_true[i][0]/phi_scaling, cmap='coolwarm')
+        ax.set_title('Testing case (True): ' + str(i))
         h.set_clim(vmin=0, vmax=1)
         fig.colorbar(h, ax=ax)
         
         ax = fig.add_subplot(gs[2])
-        h = ax.imshow(abs(phi_true[i][0] - phi_pred[i][0]), cmap='coolwarm')
+        h = ax.imshow(abs(phi_true[i][0]/phi_scaling - phi_pred[i][0]/phi_scaling), cmap='coolwarm')
         ax.set_title('Testing case (Err): ' + str(i))
         h.set_clim(vmin=0, vmax=1)
         fig.colorbar(h, ax=ax)
@@ -176,21 +177,21 @@ def main():
         gs = fig.add_gridspec(1, 3)
 
         ax = fig.add_subplot(gs[0])
-        h = ax.imshow(phi_pred[i][0], cmap='coolwarm')
+        h = ax.imshow(phi_pred[i][0]/phi_scaling, cmap='coolwarm')
         ax.set_title('Testing case (Pred): ' + str(i))
         h.set_clim(vmin=0, vmax=1)
         fig.colorbar(h, ax=ax)
 
         ax = fig.add_subplot(gs[1])
-        h = ax.imshow(phi_true[i][0], cmap='coolwarm')
-        ax.set_title('Testing case (Pred): ' + str(i))
+        h = ax.imshow(phi_true[i][0]/phi_scaling, cmap='coolwarm')
+        ax.set_title('Testing case (True): ' + str(i))
         h.set_clim(vmin=0, vmax=1)
         fig.colorbar(h, ax=ax)
         
         ax = fig.add_subplot(gs[2])
-        h = ax.imshow(abs(phi_true[i][0] - phi_pred[i][0]), cmap='coolwarm')
+        h = ax.imshow(abs(phi_true[i][0]/phi_scaling - phi_pred[i][0]/phi_scaling), cmap='coolwarm')
         ax.set_title('Testing case (Err): ' + str(i))
-        h.set_clim(vmin=0, vmax=1)
+        h.set_clim(vmin=0, vmax=0.1)
         fig.colorbar(h, ax=ax)
 
         fig.savefig(dump_train + '/img_' + str(i) + '.png')

@@ -35,13 +35,14 @@ def prep_train_test(Param):
     dataset = io.loadmat('../dataset.mat')
     phi_init_raw = dataset['phi_init_train']
     phi_raw = dataset['phi_train']
+    img_size = 122
 
-    phi_init = np.zeros((num_snaps, 1, 110, 110))
-    phi = np.zeros((num_snaps, 1, 110, 110))
+    phi_init = np.zeros((num_snaps, 1, img_size, img_size))
+    phi = np.zeros((num_snaps, 1, img_size, img_size))
 
     for i in range(0, num_snaps):
-        phi_init[i] = phi_init_raw[:, i].reshape(1, 110, 110)
-        phi[i] = phi_raw[:, i].reshape(1, 110, 110)
+        phi_init[i] = phi_init_raw[:, i].reshape(1, img_size, img_size)
+        phi[i] = phi_raw[:, i].reshape(1, img_size, img_size)
 
     ######################################
     fig = plt.figure(constrained_layout=False, figsize=(7, 3))
@@ -59,9 +60,9 @@ def prep_train_test(Param):
     h.set_clim(vmin=0, vmax=1)
     fig.colorbar(h, ax=ax)
 
-    fig.savefig('test.png')
-    plt.close()
-    exit()
+    # fig.savefig('test.png')
+    # plt.close()
+    # exit()
     ######################################
 
     ######################
@@ -76,7 +77,7 @@ def prep_train_test(Param):
         x1 = block_reduce(x1, block_size=(1, size_filter), func=np.mean)
         x2 = block_reduce(x2, block_size=(1, size_filter), func=np.mean)
 
-    length_img = int(np.ceil(110/size_filter))
+    length_img = int(np.ceil(img_size/size_filter))
     len_img_sq = length_img*length_img
 
     #######################################################################

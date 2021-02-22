@@ -52,8 +52,8 @@ for i = 1:9
 end
 
 %%
-x_train = linspace(0, 1, 110);
-y_train = linspace(0, 1, 110);
+x_train = linspace(0, 1, 122);
+y_train = linspace(0, 1, 122);
 stress_train = force_df1(1:intv:end);
 
 count = 1;
