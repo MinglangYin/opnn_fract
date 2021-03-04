@@ -53,8 +53,8 @@ def main():
     u_train, x_train, y_train, u_test, x_test, y_test = prep_train_test(Param)
 
     ## scaling
-    #y_train = y_train*10
-    #y_test = y_test*10
+    u_test = u_test*100
+    u_train = u_train*100
 
     ##
     u_train_tensor = torch.tensor(u_train, dtype=torch.float).to(device)
@@ -71,6 +71,11 @@ def main():
     optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
     train_loss = np.zeros((args.epochs, 1))
     test_loss = np.zeros((args.epochs, 1))
+
+    # print(y_train_tensor.shape)
+    # print(x_train_tensor.shape)
+    # print(u_train_tensor.shape)
+    # exit()
 
     ## training
     def train(epoch, u, x, y):
@@ -134,28 +139,31 @@ def main():
 
 #################################################################
     damage_pred = model.forward(u_test_tensor, x_test_tensor)
-    damage_pred = to_numpy(damage_pred).reshape(num_test, 1, u_test.shape[2], u_test.shape[3])
-    damage_true = y_test.reshape(num_test, 1, u_test.shape[2], u_test.shape[3])
+    damage_pred = to_numpy(damage_pred).reshape(num_test, -1)
+    damage_true = y_test.reshape(num_test, -1)
+
+    aa = int(64000/10)
+
     count = 0
     for i in range(0, num_test):
         print(f"printing case: {i}")
-        fig = plt.figure(constrained_layout=False, figsize=(11, 3))
+        fig = plt.figure(constrained_layout=False, figsize=(13, 4))
         gs = fig.add_gridspec(1, 3)
 
         ax = fig.add_subplot(gs[0])
-        h = ax.imshow(damage_pred[i][0], cmap='coolwarm')
+        h = ax.scatter(x_test[i*aa:(i+1)*aa, 0], x_test[i*aa:(i+1)*aa, 1], c = damage_pred[i, :], cmap='coolwarm')
         ax.set_title('Testing case (Pred): ' + str(i))
         h.set_clim(vmin=0, vmax=1)
         fig.colorbar(h, ax=ax)
 
         ax = fig.add_subplot(gs[1])
-        h = ax.imshow(damage_true[i][0], cmap='coolwarm')
+        h = ax.scatter(x_test[i*aa:(i+1)*aa, 0], x_test[i*aa:(i+1)*aa, 1], c = damage_true[i, :], cmap='coolwarm')
         ax.set_title('Testing case (Pred): ' + str(i))
         h.set_clim(vmin=0, vmax=1)
         fig.colorbar(h, ax=ax)
         
         ax = fig.add_subplot(gs[2])
-        h = ax.imshow(abs(damage_true[i][0] - damage_pred[i][0]), cmap='coolwarm')
+        h = ax.scatter(x_test[i*aa:(i+1)*aa, 0], x_test[i*aa:(i+1)*aa, 1], c = abs(damage_pred[i, :] - damage_true[i, :]), cmap='coolwarm')
         ax.set_title('Testing case (Err): ' + str(i))
         h.set_clim(vmin=0, vmax=1)
         fig.colorbar(h, ax=ax)
@@ -165,29 +173,32 @@ def main():
 
     ## save train
     damage_pred = model.forward(u_train_tensor, x_train_tensor)
-    damage_pred = to_numpy(damage_pred).reshape(num_train, 1, u_train.shape[2], u_train.shape[3])
-    damage_true = y_train.reshape(num_train, 1, u_train.shape[2], u_train.shape[3])
+    damage_pred = to_numpy(damage_pred).reshape(num_train, -1)
+    damage_true = y_train.reshape(num_train, -1)
+
+    aa = int(64000/10)
+
     count = 0
     for i in range(0, num_train):
-        print("printing case: {i}")
-        fig = plt.figure(constrained_layout=False, figsize=(11, 3))
+        print(f"printing case: {i}")
+        fig = plt.figure(constrained_layout=False, figsize=(13, 4))
         gs = fig.add_gridspec(1, 3)
 
         ax = fig.add_subplot(gs[0])
-        h = ax.imshow(phi_pred[i][0], cmap='coolwarm')
-        ax.set_title('Testing case (Pred): ' + str(i))
+        h = ax.scatter(x_train[i*aa:(i+1)*aa, 0], x_train[i*aa:(i+1)*aa, 1], c = damage_pred[i, :], cmap='coolwarm')
+        ax.set_title('Training case (Pred): ' + str(i))
         h.set_clim(vmin=0, vmax=1)
         fig.colorbar(h, ax=ax)
 
         ax = fig.add_subplot(gs[1])
-        h = ax.imshow(phi_true[i][0], cmap='coolwarm')
-        ax.set_title('Testing case (Pred): ' + str(i))
+        h = ax.scatter(x_train[i*aa:(i+1)*aa, 0], x_train[i*aa:(i+1)*aa, 1], c = damage_true[i, :], cmap='coolwarm')
+        ax.set_title('Training case (Pred): ' + str(i))
         h.set_clim(vmin=0, vmax=1)
         fig.colorbar(h, ax=ax)
         
         ax = fig.add_subplot(gs[2])
-        h = ax.imshow(abs(phi_true[i][0] - phi_pred[i][0]), cmap='coolwarm')
-        ax.set_title('Testing case (Err): ' + str(i))
+        h = ax.scatter(x_train[i*aa:(i+1)*aa, 0], x_train[i*aa:(i+1)*aa, 1], c = abs(damage_pred[i, :] - damage_true[i, :]), cmap='coolwarm')
+        ax.set_title('Training case (Err): ' + str(i))
         h.set_clim(vmin=0, vmax=1)
         fig.colorbar(h, ax=ax)
 
