@@ -63,8 +63,8 @@ def plot_loss():
     fig = plt.figure(constrained_layout=False, figsize=(6, 6))
     gs = fig.add_gridspec(1, 1)
     ax = fig.add_subplot(gs[0])
-    ax.plot(x, train_loss[:, 0], color='blue', label='Training Loss')
-    ax.plot(x, test_loss[:, 0], color='red', label='Test Loss', linestyle='dashed')
+    ax.plot(x, train_loss, color='blue', label='Training Loss')
+    ax.plot(x, test_loss, color='red', label='Test Loss', linestyle='dashed')
 
     # ax.plot(x, wod_tear_res[:, 0], color='black', label='WOD Loss', linestyle='dashed')
     # ax.plot(x, wod_tear_res[:, 1], color='orange', label='P_tear Loss', linestyle='dashed')

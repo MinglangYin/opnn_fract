@@ -105,19 +105,20 @@ def prep_train_test(Param):
 #        x_new[i*tmp_length:(i+1)*tmp_length, 1] = x2_flat
 
     tmp_length = x1.shape[0]
-    num_gap = 10
+    num_gap = 1
     num_sample = int(tmp_length/num_gap)
-    id_sample = np.random.choice(tmp_length, num_sample, replace=False)
+    # id_sample = np.random.choice(tmp_length, num_sample, replace=False)
+    id_sample = np.linspace(0, num_sample-1, num_sample, dtype=int)
 
     x_new = np.zeros((num_sample*num_cases, 3))
-    u_new = np.zeros((num_sample*num_cases, 50))
+    u_new = np.zeros((num_sample*num_cases, 10))
 
     for i in range(0, num_cases):
         x_new[i*num_sample:(i+1)*num_sample,0:1] = x1[id_sample, 0:1]
         x_new[i*num_sample:(i+1)*num_sample,1:2] = x2[id_sample, 0:1]
         x_new[i*num_sample:(i+1)*num_sample,2:3] = y[id_sample, i:i+1]
 
-        u_new[i*num_sample:(i+1)*num_sample,:] = u[:, i]
+        u_new[i*num_sample:(i+1)*num_sample,:] = u[::5, i]
 
 #        id_left = i*tmp_length*loading_steps
 #        for j in range(0, loading_steps):
