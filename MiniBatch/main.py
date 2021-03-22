@@ -29,12 +29,12 @@ def main():
     dim_tr = [2, 100, 100, 100]
     lmd = 0 #1e-5
 
-    num_cases = 100
-    num_test = 20
-    num_train = 80
+    num_cases = 1000
+    num_test = 200
+    num_train = 800
     #size_filter = 11
     if_gauss_filter = 1
-    sigma_gauss = 0
+    sigma_gauss = 1.5
     
     Param = {}
     Param['num_cases'] = num_cases
@@ -78,13 +78,13 @@ def main():
     y_train[y_train < 1e-2] = 0
     
     ##
-    u_train_tensor = torch.tensor(u_train, dtype=torch.float).to(device)
-    x_train_tensor = torch.tensor(x_train, dtype=torch.float).to(device)
-    y_train_tensor = torch.tensor(y_train, dtype=torch.float).to(device)
+    u_train_pred_tensor = torch.tensor(u_train, dtype=torch.float).to(device)
+    x_train_pred_tensor = torch.tensor(x_train, dtype=torch.float).to(device)
+    #y_pred_tensor = torch.tensor(y_train, dtype=torch.float).to(device)
 
-    u_test_tensor = torch.tensor(u_test, dtype=torch.float).to(device)
-    x_test_tensor = torch.tensor(x_test, dtype=torch.float).to(device)
-    y_test_tensor = torch.tensor(y_test, dtype=torch.float).to(device)
+    u_pred_tensor = torch.tensor(u_test, dtype=torch.float).to(device)
+    x_pred_tensor = torch.tensor(x_test, dtype=torch.float).to(device)
+    y_pred_tensor = torch.tensor(y_test, dtype=torch.float).to(device)
 
     ## initialization
     model = opnn(dim_br, dim_tr).to(device)
@@ -142,6 +142,7 @@ def main():
         ## Training
         #train(epoch, u_train_tensor, x_train_tensor, y_train_tensor)
         for i, (u_train_tensor, x_train_tensor, y_train_tensor) in enumerate(train_dataloader):
+            print(f'mini-batch: {i}')
             train(epoch, i, u_train_tensor, x_train_tensor, y_train_tensor)
         ## Testing
         for i, (u_test_tensor, x_test_tensor, y_test_tensor) in enumerate(test_dataloader):
@@ -172,10 +173,10 @@ def main():
     np.savetxt('./test_loss.txt', test_loss)
 
 #################################################################
-    damage_pred = model.forward(u_test_tensor, x_test_tensor)
+    damage_pred = model.forward(u_pred_tensor, x_pred_tensor)
     damage_pred = to_numpy(damage_pred).reshape(num_test, -1)
     damage_true = y_test.reshape(num_test, -1)
-
+    print(f"shape of damage_pred: {damage_pred.shape}")
     # aa = int(74*193/10)
 #    aa = 19*97
 #
@@ -223,7 +224,7 @@ def main():
             count = count + 1
 
     ## save train
-    damage_pred = model.forward(u_train_tensor, x_train_tensor)
+    damage_pred = model.forward(u_train_pred_tensor, x_train_pred_tensor)
     damage_pred = to_numpy(damage_pred).reshape(num_train, -1)
     damage_true = y_train.reshape(num_train, -1)
 
