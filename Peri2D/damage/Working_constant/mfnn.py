@@ -4,8 +4,6 @@ Multifidelity Architecture
 """
 import torch
 import torch.nn as nn
-import math
-
 #### FNN
 class opnn(nn.Module):
     def __init__(self, branch_dim, trunk_dim):

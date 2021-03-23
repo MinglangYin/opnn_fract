@@ -25,8 +25,8 @@ def main():
     batch_size = args.batch_size
     restart = args.restart
 
-    dim_br = [25, 100, 100, 100]
-    dim_tr = [2, 100, 100, 100]
+    dim_br = [1, 50, 50, 50]
+    dim_tr = [2, 50, 50, 50]
     lmd = 0 #1e-5
 
     num_cases = 10
@@ -56,13 +56,17 @@ def main():
     u_train, x_train, y_train, u_test, x_test, y_test = prep_train_test(Param)
 
     ## scaling
-    u_test = u_test*1000/10
-    u_train = u_train*1000/10
+    u_test = u_test*100#0/10
+    u_train = u_train*100#0/10
 
-    y_test = y_test#*10
-    y_train = y_train#*10
+    u_train = u_train[:, 0][:, None]
+    u_test = u_test[:, 0][:, None]
+
+    y_test = 5*y_test+1#*10
+    y_train = 5*y_train+1#*10
 #    y_test[y_test < 1e-1] = 0
 #    y_train[y_train < 1e-1] = 0
+
 
     ##
     u_train_tensor = torch.tensor(u_train, dtype=torch.float).to(device)
@@ -126,18 +130,15 @@ def main():
     print('start training...', flush=True)
     tic = time.time()
     for epoch in range(0, epochs):
-        
-        print(f'{epoch}')
+
         ## switch optimizers
-#        if epoch > 9500:
-#            optimizer = torch.optim.LBFGS(model.parameters())
-#            print("Training with LBFGS")
+        # if epoch > 19500:
+        #    optimizer = torch.optim.LBFGS(model.parameters())
+        #    print("Training with LBFGS")
         
         ## Training
         train(epoch, u_train_tensor, x_train_tensor, y_train_tensor)
         ## Testing
-        
-        
         y_pred = to_numpy(model.forward(u_test_tensor, x_test_tensor))
         y_true = to_numpy(y_test_tensor)
         #if (epoch <= 15000):
@@ -182,26 +183,32 @@ def main():
         damage_true_print = damage_true[i, :].reshape(num_rows, num_cols).transpose()
 
         print(f"printing case: {i}")
-        fig = plt.figure(constrained_layout=False, figsize=(6, 12))
+        fig = plt.figure(constrained_layout=False, figsize=(6, 6))
         gs = fig.add_gridspec(3, 1)
 
         ax = fig.add_subplot(gs[0])
         h = ax.imshow(damage_pred_print)
         ax.set_title('Testing case (Pred): ' + str(i))
         # h.set_clim(vmin=0, vmax=1)
-        fig.colorbar(h, ax=ax)
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        fig.colorbar(h, ax=ax, cax=cax)
 
         ax = fig.add_subplot(gs[1])
         h = ax.imshow(damage_true_print)
         ax.set_title('Testing case (True): ' + str(i))
         # h.set_clim(vmin=0, vmax=1)
-        fig.colorbar(h, ax=ax)
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        fig.colorbar(h, ax=ax, cax=cax)
         
         ax = fig.add_subplot(gs[2])
         h = ax.imshow(abs(damage_pred_print - damage_true_print))
         ax.set_title('Testing case (Err): ' + str(i))
         # h.set_clim(vmin=0, vmax=1)
-        fig.colorbar(h, ax=ax)
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        fig.colorbar(h, ax=ax, cax=cax)
 
         fig.savefig(dump_test + '/img_' + str(i) + '.png')
         plt.close()
@@ -218,26 +225,34 @@ def main():
         damage_true_print = damage_true[i, :].reshape(num_rows, num_cols).transpose()
 
         print(f"printing case: {i}")
-        fig = plt.figure(constrained_layout=False, figsize=(6, 12))
+        fig = plt.figure(constrained_layout=False, figsize=(6, 6))
         gs = fig.add_gridspec(3, 1)
 
         ax = fig.add_subplot(gs[0])
         h = ax.imshow(damage_pred_print)
         ax.set_title('Training case (Pred): ' + str(i))
         # h.set_clim(vmin=0, vmax=1)
-        fig.colorbar(h, ax=ax, cbar)
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        fig.colorbar(h, ax=ax, cax=cax)
 
         ax = fig.add_subplot(gs[1])
         h = ax.imshow(damage_true_print)
         ax.set_title('Training case (True): ' + str(i))
         # h.set_clim(vmin=0, vmax=1)
-        fig.colorbar(h, ax=ax)
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        fig.colorbar(h, ax=ax, cax=cax)
+
         
         ax = fig.add_subplot(gs[2])
         h = ax.imshow(abs(damage_pred_print - damage_true_print))
         ax.set_title('Training case (Err): ' + str(i))
         # h.set_clim(vmin=0, vmax=1)
-        fig.colorbar(h, ax=ax)
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        fig.colorbar(h, ax=ax, cax=cax)
+
 
         fig.savefig(dump_train + '/img_' + str(i) + '.png')
         plt.close()
