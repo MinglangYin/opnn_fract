@@ -13,6 +13,7 @@ from mfnn import *
 from preproc import *
 
 import matplotlib
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 matplotlib.use('Agg')
 
 def main():
@@ -55,8 +56,8 @@ def main():
     u_train, x_train, y_train, u_test, x_test, y_test = prep_train_test(Param)
 
     ## scaling
-    u_test = u_test*100#0/10
-    u_train = u_train*100#0/10
+    u_test = u_test*1000/10
+    u_train = u_train*1000/10
 
     y_test = y_test#*10
     y_train = y_train#*10
@@ -224,7 +225,7 @@ def main():
         h = ax.imshow(damage_pred_print)
         ax.set_title('Training case (Pred): ' + str(i))
         # h.set_clim(vmin=0, vmax=1)
-        fig.colorbar(h, ax=ax)
+        fig.colorbar(h, ax=ax, cbar)
 
         ax = fig.add_subplot(gs[1])
         h = ax.imshow(damage_true_print)
