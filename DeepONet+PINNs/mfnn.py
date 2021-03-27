@@ -58,7 +58,7 @@ class opnn(nn.Module):
         u_t = gradients(u, x)[0][:, 1]
         u_x = gradients(u, x)[0][:, 0]
         u_xx = gradients(u_x, x)[0][:, 0]
-        loss = u_t - 0.01*u_xx - 0.01*u**2 - f_gov[:,0:1]
+        loss = (u_t - 0.01*u_xx - 0.01*u**2 - f_gov[:,0:1]).mean()
         
         return loss     
 

@@ -76,8 +76,9 @@ def main():
 
         def closure():
             optimizer.zero_grad()
-            loss_pde = ((model.loss_pde(f,x,f_gov)-u)**2).mean()
-            loss = loss_pde
+            loss_data = ((model.forward(f,x)-u)**2).mean()
+            loss_pde = model.loss_pde(f,x,f_gov)
+            loss = loss_pde + loss_data
             train_loss[epoch, 0] = loss
             loss.backward()
             return loss
