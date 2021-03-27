@@ -51,6 +51,14 @@ def main():
     ## dataset
     f_train, x_train, u_train, f_gov_train, f_test, x_test, u_test, f_gov_test = prep_train_test(Param)
 
+    # print(x_test.shape)
+    # print(u_test.shape)
+    # print(f_gov_test.shape)
+    # print(f_gov_train.shape)
+    # exit()
+    # print(f_train.shape)
+    # print(f_train.shape)
+
     ##
     f_train_tensor = torch.tensor(f_train, dtype=torch.float).to(device)
     x_train_tensor = torch.tensor(x_train, dtype=torch.float, requires_grad=True,).to(device)

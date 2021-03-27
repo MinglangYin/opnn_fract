@@ -54,11 +54,11 @@ class opnn(nn.Module):
     
     def loss_pde(self, f, x, f_gov):
         
-        u = self.forward(f,x)
+        u = self.forward(f,x)[:, 0]
         u_t = gradients(u, x)[0][:, 1]
         u_x = gradients(u, x)[0][:, 0]
         u_xx = gradients(u_x, x)[0][:, 0]
-        loss = (u_t - 0.01*u_xx - 0.01*u**2 - f_gov[:,0:1]).mean()
+        loss = ((u_t - 0.01*u_xx - 0.01*u**2 - f_gov[:,0])**2).mean()
         
         return loss     
 
