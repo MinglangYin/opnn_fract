@@ -30,16 +30,10 @@ def main():
     dim_tr = [2, 50, 50, 50]
     lmd = 0 #1e-5
 
-    num_cases = 10
-    num_train = 8
-    num_test = 2
-    
-    Param = {}
-    Param['num_cases'] = num_cases
-    Param['num_train'] = num_train
-    Param['num_test'] = num_test
+    num_cases = 50
+    num_train = 40
+    num_test = 10
 
-    
     ## create folders
     dump_test = './Predictions/Test/'
     dump_train = './Predictions/Train/'
@@ -49,15 +43,24 @@ def main():
     os.makedirs('CheckPts', exist_ok=True)
     
     ## dataset
-    f_train, x_train, u_train, f_gov_train, f_test, x_test, u_test, f_gov_test = prep_train_test(Param)
+    dataset = io.loadmat('dataset.mat')
+    dim_f = dataset['dim_f'][0][0]
+    dim = dataset['dim'][0][0]
 
-    # print(x_test.shape)
-    # print(u_test.shape)
-    # print(f_gov_test.shape)
-    # print(f_gov_train.shape)
-    # exit()
-    # print(f_train.shape)
-    # print(f_train.shape)
+    x_data = dataset['X_data']
+    f_data = dataset['F_data']
+    u_data = dataset['U_data']
+    f_pde_data = dataset['F_PDE_data']
+
+    x_train = x_data[:num_train*dim, :]
+    f_train = f_data[:num_train*dim, :]
+    u_train = u_data[:num_train*dim, :]
+    f_gov_train = f_pde_data[:num_train*dim, :]
+
+    x_test = x_data[num_train*dim:(num_train+num_test)*dim, :]
+    f_test = f_data[num_train*dim:(num_train+num_test)*dim, :]
+    u_test = u_data[num_train*dim:(num_train+num_test)*dim, :]
+    f_gov_test = f_pde_data[num_train*dim:(num_train+num_test)*dim, :]
 
     ##
     f_train_tensor = torch.tensor(f_train, dtype=torch.float).to(device)
@@ -69,7 +72,7 @@ def main():
     x_test_tensor = torch.tensor(x_test, dtype=torch.float, requires_grad=True,).to(device)
     u_test_tensor = torch.tensor(u_test, dtype=torch.float).to(device)
     f_gov_test_tensor = torch.tensor(f_gov_test, dtype=torch.float).to(device)
-    
+
     ## initialization
     model = opnn(dim_br, dim_tr).to(device)
     model = model.float()    
@@ -84,9 +87,11 @@ def main():
 
         def closure():
             optimizer.zero_grad()
-            loss_data = ((model.forward(f,x)-u)**2).mean()
-            loss_pde = model.loss_pde(f,x,f_gov)
+            y_out = model.forward(f,x)
+            loss_data = ((y_out - u)**2).mean()
+            loss_pde = 0#model.loss_pde(f,x,f_gov)
             loss = loss_pde + loss_data
+
             train_loss[epoch, 0] = loss
             loss.backward()
             return loss
@@ -124,15 +129,84 @@ def main():
     u_pred = to_numpy(u_pred).reshape(num_test, -1)
     u_true = u_test.reshape(num_test, -1)
     scipy.io.savemat('u_test.mat',{'f':f_test, 'x':x_test, 'u':u_pred})
-    
-#    print(f_train_tensor.shape)
-#    print(x_train_tensor.shape)
-#    exit()
+
+    ## figure (test) ##
+
+    for i in range(0, num_test):
+        print(f"printing testing case: {i}")
+        u_model = u_pred[i, :].reshape(100, 100)
+        u_data = u_true[i, :].reshape(100, 100)
+
+        fig = plt.figure(constrained_layout=False, figsize=(14, 3))
+        gs = fig.add_gridspec(1, 3)
+
+        ax = fig.add_subplot(gs[0])
+        h = ax.imshow(u_model)
+        ax.set_title('Testing case (Pred): ' + str(i))
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        fig.colorbar(h, ax=ax, cax=cax)
+
+        ax = fig.add_subplot(gs[1])
+        h = ax.imshow(u_data)
+        ax.set_title('Testing case (True): ' + str(i))
+        # h.set_clim(vmin=0, vmax=1)
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        fig.colorbar(h, ax=ax, cax=cax)
+
+        ax = fig.add_subplot(gs[2])
+        h = ax.imshow(abs(u_data - u_model))
+        ax.set_title('Testing case (Err): ' + str(i))
+        # h.set_clim(vmin=0, vmax=1)
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        fig.colorbar(h, ax=ax, cax=cax)
+
+        fig.savefig(dump_test + 'img_' + str(i) + '.png')
+        plt.tight_layout()
+        plt.close()
+
     ## save train
     u_pred = model(f_train_tensor, x_train_tensor)
     u_pred = to_numpy(u_pred).reshape(num_train, -1)
     u_true = u_train.reshape(num_train, -1)    
     scipy.io.savemat('u_train.mat',{'f':f_train, 'x':x_train, 'u':u_pred})
+
+    for i in range(0, num_train):
+        print(f"printing training case: {i}")
+        u_model = u_pred[i, :].reshape(100, 100)
+        u_data = u_true[i, :].reshape(100, 100)
+
+        fig = plt.figure(constrained_layout=False, figsize=(14, 3))
+        gs = fig.add_gridspec(1, 3)
+
+        ax = fig.add_subplot(gs[0])
+        h = ax.imshow(u_model)
+        ax.set_title('training case (Pred): ' + str(i))
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        fig.colorbar(h, ax=ax, cax=cax)
+
+        ax = fig.add_subplot(gs[1])
+        h = ax.imshow(u_data)
+        ax.set_title('training case (True): ' + str(i))
+        # h.set_clim(vmin=0, vmax=1)
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        fig.colorbar(h, ax=ax, cax=cax)
+
+        ax = fig.add_subplot(gs[2])
+        h = ax.imshow(abs(u_data - u_model))
+        ax.set_title('training case (Err): ' + str(i))
+        # h.set_clim(vmin=0, vmax=1)
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="5%", pad=0.05)
+        fig.colorbar(h, ax=ax, cax=cax)
+
+        fig.savefig(dump_train + 'img_' + str(i) + '.png')
+        plt.tight_layout()
+        plt.close()
     
 if __name__ == "__main__":
     main()
