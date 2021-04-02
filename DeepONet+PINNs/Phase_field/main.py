@@ -1,6 +1,6 @@
 """
 Author: Minglang Yin, minglang_yin@brown.edu, Somdatta Goswami, somdatta_goswami@brown.edu
-DeepONet for predicting damage field using data from peridynamics.
+DeepONet for predicting damage field using data from Phase-field Models.
 """
 import os
 import torch
@@ -21,7 +21,7 @@ def main():
     ## hyperparameters
     args = ParseArgument()
     epochs = args.epochs
-    device = "cpu"#args.device
+    device = args.device
     save_step = args.save_step
     batch_size = args.batch_size
     restart = args.restart
@@ -31,9 +31,9 @@ def main():
     lmd = 0 #1e-5
 
     loading_steps = 3 # max = 8
-    num_train = 2
+    num_train = 1
     num_test = 1
-    num_crackPos = 9 # DO not change this 
+    num_crackPos = 8 # DO not change this 
     
     Param = {}
     Param['num_cases'] = loading_steps
@@ -51,22 +51,7 @@ def main():
     
     ## dataset
     appDisp_train, x_train, u_train, v_train, phi_train, hist_init_train, appDisp_test, x_test, u_test, v_test, phi_test, hist_init_test = prep_train_test(Param)
-    # print(f"appDisp_train: {appDisp_train.shape}")
-    # print(f"x_train: {x_train.shape}")
-    # print(f"u_train: {u_train.shape}")
-    # print(f"v_train: {v_train.shape}")
-    # print(f"phi_train: {phi_train.shape}")
-    # print(f"hist_init_train: {hist_init_train.shape}")
-    # print(f"appDisp_test: {appDisp_test.shape}")
-    # print(f"x_test: {x_test.shape}")
-    # print(f"u_test: {u_test.shape}")
-    # print(f"v_test: {v_test.shape}")
-    # print(f"phi_test: {phi_test.shape}")
-    # print(f"hist_init_test: {hist_init_test.shape}")
-    # scipy.io.savemat('Test.mat',{'AppDisp':appDisp_test, 'x':x_test, 'u':u_test, 'v':v_test, 'phi':phi_test, 'hist_init':hist_init_test})
-    # scipy.io.savemat('Train.mat',{'AppDisp':appDisp_train, 'x':x_train, 'u':u_train, 'v':v_train, 'phi':phi_train, 'hist_init':hist_init_train})
-    # exit()
-    ##
+
     appDisp_train_tensor = torch.tensor(appDisp_train, dtype=torch.float).to(device)
     x_train_tensor = torch.tensor(x_train, dtype=torch.float, requires_grad=True).to(device)
     u_train_tensor = torch.tensor(u_train, dtype=torch.float, requires_grad=True).to(device)
@@ -85,31 +70,22 @@ def main():
     model = opnn(dim_br, dim_tr).to(device)
     model = model.float()    
     optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
-
+    
     train_loss = np.zeros((args.epochs, 1))
     test_loss = np.zeros((args.epochs, 1))
     
     ## training
     def train(epoch, appDisp, x, u, v, phi, hist_init):
         model.train()
-
         def closure():
             optimizer.zero_grad()
-            
-            u_out = model.forward_u(appDisp, x)
-            # exit()
-            v_out = model.forward_v(appDisp, x)
-            phi_out = model.forward_phi(appDisp, x)
-            # exit()
-            loss_data = ((u_out - u[:,0])**2).mean() + ((v_out - v[:,0])**2).mean() + ((phi_out - phi[:,0])**2).mean()
-            #print(f"loss_data: {loss_data}")
-            # exit()
+            y_out = model.forward(appDisp, x)
+            u_out, v_out, phi_out = y_out[:, 0], y_out[:, 1], y_out[:, 2]
+            loss_data = 0 #((u_out - u[:, 0])**2).mean() + ((v_out - v[:, 0])**2).mean() + ((phi_out - phi[:, 0])**2).mean()
             loss_pde = model.loss_energy(appDisp, x, hist_init)
-            # print(f"loss_pde: {loss_pde}")
-            # exit()
+            print(f"epoch: {epoch}, loss_data: {loss_data}, loss_pde: {loss_pde}")
+
             loss = loss_pde + loss_data
-            # print(f"loss: {loss}")
-            # exit()
             train_loss[epoch, 0] = loss
             loss.backward()
             return loss
@@ -119,26 +95,26 @@ def main():
     print('start training...', flush=True)
     tic = time.time()
     for epoch in range(0, epochs):
-        
         ## Training
         train(epoch, appDisp_train_tensor, x_train_tensor, u_train_tensor, v_train_tensor, phi_train_tensor, hist_init_train_tensor)
-        # exit(0)
+        # print(hist_init_train_tensor.shape)
+        # train(epoch, appDisp_test_tensor, x_test_tensor, u_test_tensor, v_test_tensor, phi_test_tensor)
         ## Testing
-        u_pred = to_numpy(model.forward_u(appDisp_test_tensor, x_test_tensor))
-        v_pred = to_numpy(model.forward_v(appDisp_test_tensor, x_test_tensor))
-        phi_pred = to_numpy(model.forward_phi(appDisp_test_tensor, x_test_tensor))
-        u_true = to_numpy(u_test_tensor)
-        v_true = to_numpy(v_test_tensor)
-        phi_true = to_numpy(phi_test_tensor)
-        test_loss[epoch, 0] = ((u_pred - u_true[:,0])**2).mean() + ((v_pred - v_true[:,0])**2).mean() + ((phi_pred - phi_true[:,0])**2).mean()
-        print(f'Epoch: {epoch+1}, Train Loss: {train_loss[epoch, 0]:.6f}, Test Loss: {test_loss[epoch, 0]:.6f}', flush=True)
-        # exit(0)
-        ## Save model
-        if (epoch+1)%save_step == 0: 
-            torch.save({
-                'model_state_dict': model.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict()
-            }, model_path)
+
+        # u_pred = to_numpy(model.forward_u(appDisp_test_tensor, x_test_tensor))
+        # v_pred = to_numpy(model.forward_v(appDisp_test_tensor, x_test_tensor))
+        # phi_pred = to_numpy(model.forward_phi(appDisp_test_tensor, x_test_tensor))
+        # u_true = to_numpy(u_test_tensor)
+        # v_true = to_numpy(v_test_tensor)
+        # phi_true = to_numpy(phi_test_tensor)
+        # test_loss[epoch, 0] = ((u_pred - u_true[:,0])**2).mean() + ((v_pred - v_true[:,0])**2).mean() + ((phi_pred - phi_true[:,0])**2).mean()
+        # print(f'Epoch: {epoch+1}, Train Loss: {train_loss[epoch, 0]:.6f}, Test Loss: {test_loss[epoch, 0]:.6f}', flush=True)
+        # ## Save model
+        # if (epoch+1)%save_step == 0: 
+        #     torch.save({
+        #         'model_state_dict': model.state_dict(),
+        #         'optimizer_state_dict': optimizer.state_dict()
+        #     }, model_path)
 
     toc = time.time()
 
@@ -147,28 +123,16 @@ def main():
     np.savetxt('./test_loss.txt', test_loss)
 
 #################################################################
-    u_pred = model.forward_u(appDisp_test_tensor, x_test_tensor)
-    v_pred = model.forward_v(appDisp_test_tensor, x_test_tensor)
-    phi_pred = model.forward_phi(appDisp_test_tensor, x_test_tensor)
-    # print(f"u_pred: {u_pred.shape}")
-    # print(f"phi_pred: {v_pred.shape}")
-    # print(f"phi_pred: {phi_pred.shape}")
-    # scipy.io.savemat('Pred.mat',{'u':u_pred, 'v':v_pred, 'phi':phi_pred})
-    # exit(0)    
+    y_pred = model.forward(appDisp_test_tensor, x_test_tensor)
+    u_pred, v_pred, phi_pred = y_pred[:, 0], y_pred[:, 1], y_pred[:, 2]
+  
     u_pred = to_numpy(u_pred).reshape(num_test*num_crackPos, -1)
     v_pred = to_numpy(v_pred).reshape(num_test*num_crackPos, -1)
     phi_pred = to_numpy(phi_pred).reshape(num_test*num_crackPos, -1)
     u_true = u_test.reshape(num_test*num_crackPos, -1)
     v_true = v_test.reshape(num_test*num_crackPos, -1)
     phi_true = phi_test.reshape(num_test*num_crackPos, -1)
-    # print(f"u_pred_reshape: {u_pred.shape}")
-    # print(f"phi_pred_reshape: {v_pred.shape}")
-    # print(f"phi_pred_reshape: {phi_pred.shape}")
-    # print(f"u_pred_reshape: {u_true.shape}")
-    # print(f"phi_pred_reshape: {v_true.shape}")
-    # print(f"phi_pred_reshape: {phi_true.shape}")
-    # scipy.io.savemat('Pred_true.mat',{'u':u_pred, 'v':v_pred, 'phi':phi_pred, 'uT':u_true, 'vT':v_true, 'phiT':phi_true})  
-    # exit(0)    
+
     num_cols = 122
     num_rows = 122
     count = 0
@@ -263,14 +227,8 @@ def main():
     # exit(0)
     ## save train
     
-    u_pred = model.forward_u(appDisp_train_tensor, x_train_tensor)
-    v_pred = model.forward_v(appDisp_train_tensor, x_train_tensor)
-    phi_pred = model.forward_phi(appDisp_train_tensor, x_train_tensor)
-    # print(f"u_pred: {u_pred.shape}")
-    # print(f"phi_pred: {v_pred.shape}")
-    # print(f"phi_pred: {phi_pred.shape}")
-    # scipy.io.savemat('Pred.mat',{'u':u_pred, 'v':v_pred, 'phi':phi_pred})
-    # exit(0) 
+    y_pred = model.forward(appDisp_train_tensor, x_train_tensor)
+    u_pred, v_pred, phi_pred = y_pred[:, 0], y_pred[:, 1], y_pred[:, 2]
     
     u_pred = to_numpy(u_pred).reshape(num_train*num_crackPos, -1)
     v_pred = to_numpy(v_pred).reshape(num_train*num_crackPos, -1)
@@ -278,14 +236,7 @@ def main():
     u_true = u_train.reshape(num_train*num_crackPos, -1)
     v_true = v_train.reshape(num_train*num_crackPos, -1)
     phi_true = phi_train.reshape(num_train*num_crackPos, -1)
-    # print(f"u_pred_reshape: {u_pred.shape}")
-    # print(f"phi_pred_reshape: {v_pred.shape}")
-    # print(f"phi_pred_reshape: {phi_pred.shape}")
-    # print(f"u_pred_reshape: {u_true.shape}")
-    # print(f"phi_pred_reshape: {v_true.shape}")
-    # print(f"phi_pred_reshape: {phi_true.shape}")
-    # scipy.io.savemat('Pred_true.mat',{'u':u_pred, 'v':v_pred, 'phi':phi_pred, 'uT':u_true, 'vT':v_true, 'phiT':phi_true})  
-    # exit(0) 
+    
 
     count = 0
     for i in range(0, num_train*num_crackPos):
@@ -376,6 +327,24 @@ def main():
 
         fig.savefig(dump_train + '/img_' + str(i) + '.png')
         plt.close()
+    
+    ####################### Figure #######################
+    # train_loss = np.mean(train_loss, axis = 1)
+    num_epoch = train_loss.shape[0]
+    x = np.linspace(1, num_epoch, num_epoch)
+    
+    ## plotting
+    fig = plt.figure(constrained_layout=False, figsize=(6, 6))
+    gs = fig.add_gridspec(1, 1)
+    ax = fig.add_subplot(gs[0])
+    ax.plot(x, train_loss, color='blue', label='Training Loss')
+    ax.plot(x, test_loss, color='red', label='Test Loss', linestyle='dashed')
+
+    ax.set_yscale('log')
+    ax.set_ylabel('Loss')
+    ax.set_xlabel('Epochs')
+    ax.legend(loc='upper left')
+    fig.savefig('./loss_his.png')
     
 if __name__ == "__main__":
     main()
