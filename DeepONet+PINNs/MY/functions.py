@@ -10,17 +10,16 @@ from sklearn.linear_model import LinearRegression, Ridge, Lasso
 
 def ParseArgument():
     parser = argparse.ArgumentParser(description='DeepONet')
-    parser.add_argument('--batch-size', type=int, default=500000, metavar='N',
+    parser.add_argument('--batch-size', type=int, default=100000, metavar='N',
                         help = 'input batch size for low-fidelity training')
     parser.add_argument('--epochs', type=int, default=1000, metavar='N',
                         help = 'number of epochs to train (default: 1000)')
     parser.add_argument('--device', type=str, default='cuda', metavar='N',
                         help = 'computing device (default: GPU)')
-    parser.add_argument('--save-step', type=int, default=100, metavar='N',
+    parser.add_argument('--save-step', type=int, default=10000, metavar='N',
                         help = 'save_step (default: 200)')
     parser.add_argument('--restart', type=int, default=0, metavar='N',
                         help = 'if restart (default: 0)')
-
     args = parser.parse_args()
     return args
 
