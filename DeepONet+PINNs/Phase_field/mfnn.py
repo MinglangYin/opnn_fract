@@ -66,10 +66,10 @@ class opnn(nn.Module):
         u_br = self._branch(appDisp)
         u_tr = self._trunk(x)
         y_out = self._out_layer(u_br*u_tr)
-        y_out[:, 0] = (1- x[:, 0])*x[:, 0]*y_out[:, 0] ## u, MY: Check here!!
-        y_out[:, 1] = (1- x[:, 0])*x[:, 0]*y_out[:, 1] ## v
-        y_out[:, 2] = (1- x[:, 0])*x[:, 0]*y_out[:, 2] ## phi
-        return y_out
+        u_lift = (1 - x[:, 0])*x[:, 0]*y_out[:, 0]
+        v_lift = x[:, 1]*(x[:, 1] - 1)*y_out[:, 1] + x[:, 1]*appDisp[:, 0]
+        phi_lift = y_out[:, 2]
+        return torch.cat([u_lift[:, None], v_lift[:, None], phi_lift[:, None]], axis=1)
     
     def loss_energy(self, appDisp, x, hist_init):
         ## Total energy = elastic energy + fracture energy 
@@ -81,7 +81,7 @@ class opnn(nn.Module):
 
         y = self.forward(appDisp, x)
         u, v, phi = y[:, 0], y[:, 1], y[:, 2]
-        
+
         g = (1 - phi)**2
         # get gradients
         u_g = gradients(u, x)[0]
@@ -109,7 +109,7 @@ class opnn(nn.Module):
 
         E_e = 0.5*g*(sig_11*u_x + sig_22*v_y + sig_12*(u_y + v_x) )
         E_c = 0.5*gc*(phi**2/l + l*(phi_x**2 + phi_y**2)) + g*hist
-        print(f"E_e: {E_e.shape}")
-        print(f"E_c: {E_c.shape}")
+        # print(f"E_e: {E_e.shape}")
+        # print(f"E_c: {E_c.shape}")
         return E_e, E_c
                                                   

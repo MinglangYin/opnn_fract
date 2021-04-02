@@ -79,10 +79,12 @@ def main():
         model.train()
         def closure():
             optimizer.zero_grad()
-            y_out = model.forward(appDisp, x)
-            u_out, v_out, phi_out = y_out[:, 0], y_out[:, 1], y_out[:, 2]
+            # y_out = model.forward(appDisp, x)
+            # u_out, v_out, phi_out = y_out[:, 0], y_out[:, 1], y_out[:, 2]
             loss_data = 0 #((u_out - u[:, 0])**2).mean() + ((v_out - v[:, 0])**2).mean() + ((phi_out - phi[:, 0])**2).mean()
             loss_pde = model.loss_energy(appDisp, x, hist_init)
+
+            # print(loss_pde)
             print(f"epoch: {epoch}, loss_data: {loss_data}, loss_pde: {loss_pde}")
 
             loss = loss_pde + loss_data
