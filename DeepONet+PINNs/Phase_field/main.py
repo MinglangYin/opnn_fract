@@ -33,7 +33,7 @@ def main():
     loading_steps = 3 # max = 8
     num_train = 1
     num_test = 1
-    num_crackPos = 8 # DO not change this 
+    num_crackPos = 1 # DO not change this 
     
     Param = {}
     Param['num_cases'] = loading_steps
@@ -79,15 +79,15 @@ def main():
         model.train()
         def closure():
             optimizer.zero_grad()
-            # y_out = model.forward(appDisp, x)
-            # u_out, v_out, phi_out = y_out[:, 0], y_out[:, 1], y_out[:, 2]
-            loss_data = 0 #((u_out - u[:, 0])**2).mean() + ((v_out - v[:, 0])**2).mean() + ((phi_out - phi[:, 0])**2).mean()
+            y_out = model.forward(appDisp, x)
+            u_out, v_out, phi_out = y_out[:, 0], y_out[:, 1], y_out[:, 2]
+            loss_data = (1e5*(u_out - u[:, 0])**2).mean() + (1e4*(v_out - v[:, 0])**2).mean() + ((phi_out - phi[:, 0])**2).mean()
             loss_pde = model.loss_energy(appDisp, x, hist_init)
 
             # print(loss_pde)
             print(f"epoch: {epoch}, loss_data: {loss_data}, loss_pde: {loss_pde}")
 
-            loss = loss_pde + loss_data
+            loss = loss_pde + 10*loss_data
             train_loss[epoch, 0] = loss
             loss.backward()
             return loss
@@ -99,7 +99,7 @@ def main():
     for epoch in range(0, epochs):
         if epoch == 30000:
            optimizer = torch.optim.Adam(model.parameters(), lr = 0.0001)
-           
+
         ## Training
         train(epoch, appDisp_train_tensor, x_train_tensor, u_train_tensor, v_train_tensor, phi_train_tensor, hist_init_train_tensor)
         # print(hist_init_train_tensor.shape)
