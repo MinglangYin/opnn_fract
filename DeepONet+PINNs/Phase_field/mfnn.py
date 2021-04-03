@@ -67,10 +67,10 @@ class opnn(nn.Module):
         u_br = self._branch(appDisp)
         u_tr = self._trunk(x)
         y_out = self._out_layer(u_br*u_tr)
-        u_lift = x[:, 0]*y_out[:, 0]
-        v_lift = x[:, 1]*(x[:, 1] - 1)*y_out[:, 1] + x[:, 1]*appDisp[:, 0]
-        phi_lift = self._pos(y_out[:, 2])
-        return torch.cat([u_lift[:, None], v_lift[:, None], phi_lift[:, None]], axis=1)
+        # u_lift = x[:, 0]*y_out[:, 0]*(x[:, 0] - 1)
+        # v_lift = x[:, 1]*(x[:, 1] - 1)*y_out[:, 1] + x[:, 1]*appDisp[:, 0]
+        # phi_lift = y_out[:, 2]
+        return y_out #torch.cat([u_lift[:, None], v_lift[:, None], phi_lift[:, None]], axis=1)
     
     def loss_energy(self, appDisp, x, hist_init):
         ## Total energy = elastic energy + fracture energy 

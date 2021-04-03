@@ -97,6 +97,9 @@ def main():
     print('start training...', flush=True)
     tic = time.time()
     for epoch in range(0, epochs):
+        if epoch == 30000:
+           optimizer = torch.optim.Adam(model.parameters(), lr = 0.0001)
+           
         ## Training
         train(epoch, appDisp_train_tensor, x_train_tensor, u_train_tensor, v_train_tensor, phi_train_tensor, hist_init_train_tensor)
         # print(hist_init_train_tensor.shape)
