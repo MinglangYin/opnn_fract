@@ -24,18 +24,39 @@ class pvstrut_dataset(Dataset):
 ## damage
 def prep_train_test(Param):   
     
+    constB = 0.92
     num_cases = Param['num_cases']
     num_train = Param['num_train']
     num_test = Param['num_test']
-    num_crackPos = Param['crack_pos']
+    num_crackPos = Param['crack_pos']    
     
     dataset = io.loadmat('dataset.mat')
     x = dataset['coord']
-    hist_init = dataset['hist_init']
+    hist_init = constB*dataset['hist_init']
     phi = dataset['phi_train']
     u = dataset['u_train']
     v = dataset['v_train']
     stress_train = dataset['stress_train'].T  
+    
+#    i = 35
+#    fig = plt.figure(figsize=(5, 5))
+#    plt.scatter(x[:,0], x[:,1], c=hist_init[:,i])
+#    plt.show()
+#    
+##    hist1 = hist_init[:,i:i+1]  
+##    fig = plt.figure(figsize=(5, 5))
+##    hist_print1d = hist_init[:,i].reshape(122,-1,order = 'F').transpose()
+##    hist_print1d = hist_print1d.ravel()
+###    hist_print1d = hist_print1d.reshape(122*122,-1)
+##    plt.scatter(x[:,0], x[:,1], c=hist_print1d)
+#    
+#    fig = plt.figure(figsize=(5, 5))
+#    hist_check = hist_init[:,i].reshape(122,-1)
+#    plt.imshow(hist_check,origin='lower')
+#    plt.show()
+#    hist_print = hist_init[:,i].reshape(122,122)
+#    plt.imshow(hist_print,origin='lower',interpolation='bilinear')
+#    plt.show()
     
     tmp_length = x.shape[0]
     num_gap = 1
