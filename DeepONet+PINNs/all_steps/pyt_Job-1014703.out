@@ -1,0 +1,115 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 1014703
+##  Job Name : job.sbatch
+##  Nodelist : gpu1203
+##      CPUs : 
+##  Mem/Node : 32768 MB
+## Directory : /gpfs/data/gk/sgoswam5/damage/Phase_field/all_steps
+##   Started : Fri Apr  9 15:50:39 EDT 2021
+###############################################################################
+Start training...
+step: 1, epoch: 0, loss_pde: 4030.642822265625
+step: 1, epoch: 1, loss_pde: 1799.589599609375
+step: 1, epoch: 2, loss_pde: 626.3005981445312
+step: 1, epoch: 3, loss_pde: 142.1903839111328
+step: 1, epoch: 4, loss_pde: 178.31068420410156
+step: 1, epoch: 5, loss_pde: 544.895263671875
+step: 1, epoch: 6, loss_pde: 738.59619140625
+step: 1, epoch: 7, loss_pde: 691.852294921875
+step: 1, epoch: 8, loss_pde: 546.29736328125
+step: 1, epoch: 9, loss_pde: 384.4247131347656
+step: 1, epoch: 10, loss_pde: 238.00552368164062
+step: 1, epoch: 11, loss_pde: 124.04141235351562
+step: 1, epoch: 12, loss_pde: 56.532470703125
+step: 1, epoch: 13, loss_pde: 40.287654876708984
+step: 1, epoch: 14, loss_pde: 71.85420227050781
+step: 1, epoch: 15, loss_pde: 121.79742431640625
+step: 1, epoch: 16, loss_pde: 151.0955352783203
+step: 1, epoch: 17, loss_pde: 157.82498168945312
+step: 1, epoch: 18, loss_pde: 158.2274169921875
+step: 1, epoch: 19, loss_pde: 157.4815673828125
+step: 1, epoch: 20, loss_pde: 150.81430053710938
+step: 1, epoch: 21, loss_pde: 133.98953247070312
+step: 1, epoch: 22, loss_pde: 107.73268127441406
+step: 1, epoch: 23, loss_pde: 78.34646606445312
+step: 1, epoch: 24, loss_pde: 54.17293167114258
+step: 1, epoch: 25, loss_pde: 41.66960906982422
+step: 1, epoch: 26, loss_pde: 40.417808532714844
+step: 1, epoch: 27, loss_pde: 42.495849609375
+step: 1, epoch: 28, loss_pde: 41.8182487487793
+step: 1, epoch: 29, loss_pde: 40.214012145996094
+step: 1, epoch: 30, loss_pde: 42.240966796875
+step: 1, epoch: 31, loss_pde: 47.65944290161133
+step: 1, epoch: 32, loss_pde: 53.086002349853516
+step: 1, epoch: 33, loss_pde: 55.405426025390625
+step: 1, epoch: 34, loss_pde: 53.47710418701172
+step: 1, epoch: 35, loss_pde: 48.53985595703125
+step: 1, epoch: 36, loss_pde: 42.98517990112305
+step: 1, epoch: 37, loss_pde: 38.57987594604492
+step: 1, epoch: 38, loss_pde: 35.40431594848633
+step: 1, epoch: 39, loss_pde: 32.460792541503906
+step: 1, epoch: 40, loss_pde: 29.28365135192871
+step: 1, epoch: 41, loss_pde: 26.683916091918945
+step: 1, epoch: 42, loss_pde: 25.740604400634766
+step: 1, epoch: 43, loss_pde: 26.561336517333984
+step: 1, epoch: 44, loss_pde: 28.214096069335938
+step: 1, epoch: 45, loss_pde: 29.72515869140625
+step: 1, epoch: 46, loss_pde: 30.612287521362305
+step: 1, epoch: 47, loss_pde: 30.864473342895508
+step: 1, epoch: 48, loss_pde: 30.72079849243164
+step: 1, epoch: 49, loss_pde: 30.313020706176758
+step: 1, epoch: 50, loss_pde: 29.502853393554688
+step: 1, epoch: 51, loss_pde: 28.19976234436035
+step: 1, epoch: 52, loss_pde: 26.70206069946289
+step: 1, epoch: 53, loss_pde: 25.510427474975586
+step: 1, epoch: 54, loss_pde: 24.87293243408203
+step: 1, epoch: 55, loss_pde: 24.680089950561523
+step: 1, epoch: 56, loss_pde: 24.72766876220703
+step: 1, epoch: 57, loss_pde: 24.910749435424805
+step: 1, epoch: 58, loss_pde: 25.209352493286133
+step: 1, epoch: 59, loss_pde: 25.58382797241211
+step: 1, epoch: 60, loss_pde: 25.90774917602539
+step: 1, epoch: 61, loss_pde: 26.02391242980957
+step: 1, epoch: 62, loss_pde: 25.87336540222168
+step: 1, epoch: 63, loss_pde: 25.544036865234375
+step: 1, epoch: 64, loss_pde: 25.176565170288086
+step: 1, epoch: 65, loss_pde: 24.852901458740234
+step: 1, epoch: 66, loss_pde: 24.583438873291016
+step: 1, epoch: 67, loss_pde: 24.366003036499023
+step: 1, epoch: 68, loss_pde: 24.22649574279785
+step: 1, epoch: 69, loss_pde: 24.204416275024414
+step: 1, epoch: 70, loss_pde: 24.30530548095703
+step: 1, epoch: 71, loss_pde: 24.466279983520508
+step: 1, epoch: 72, loss_pde: 24.57851791381836
+step: 1, epoch: 73, loss_pde: 24.595623016357422
+step: 1, epoch: 74, loss_pde: 24.559307098388672
+step: 1, epoch: 75, loss_pde: 24.509340286254883
+step: 1, epoch: 76, loss_pde: 24.442913055419922
+step: 1, epoch: 77, loss_pde: 24.346132278442383
+step: 1, epoch: 78, loss_pde: 24.232681274414062
+step: 1, epoch: 79, loss_pde: 24.143844604492188
+step: 1, epoch: 80, loss_pde: 24.113388061523438
+step: 1, epoch: 81, loss_pde: 24.135356903076172
+step: 1, epoch: 82, loss_pde: 24.17233657836914
+step: 1, epoch: 83, loss_pde: 24.195411682128906
+step: 1, epoch: 84, loss_pde: 24.206241607666016
+step: 1, epoch: 85, loss_pde: 24.216535568237305
+step: 1, epoch: 86, loss_pde: 24.223756790161133
+step: 1, epoch: 87, loss_pde: 24.213815689086914
+step: 1, epoch: 88, loss_pde: 24.1809024810791
+step: 1, epoch: 89, loss_pde: 24.13767433166504
+step: 1, epoch: 90, loss_pde: 24.104825973510742
+step: 1, epoch: 91, loss_pde: 24.0924015045166
+step: 1, epoch: 92, loss_pde: 24.093364715576172
+step: 1, epoch: 93, loss_pde: 24.095916748046875
+step: 1, epoch: 94, loss_pde: 24.098114013671875
+step: 1, epoch: 95, loss_pde: 24.10478401184082
+step: 1, epoch: 96, loss_pde: 24.114791870117188
+step: 1, epoch: 97, loss_pde: 24.11969757080078
+step: 1, epoch: 98, loss_pde: 24.113605499267578
+step: 1, epoch: 99, loss_pde: 24.099706649780273
+total training time: 0 min
+printing step: 1
+Start training...
+step: 2, epoch: 0, loss_pde: 24.319616317749023
+step: 2, epoch: 1, loss_pde: 24.306203842163086

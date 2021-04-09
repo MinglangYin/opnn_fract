@@ -1,0 +1,26 @@
+module: unloading 'python/2.7.12'
+module: loading 'python/3.7.4'
+module: loading 'cuda/11.1.1'
+module: cuda: To use: module load gcc/10.2
+module: loading 'cudnn/8.1.0'
+module: cudnn: To use: module load cuda/11.1.1
+Traceback (most recent call last):
+  File "main.py", line 155, in <module>
+    main()
+  File "main.py", line 107, in main
+    train(epoch, vDelta, x_tensor, hist_pred, u_true, v_true, phi_true)
+  File "main.py", line 83, in train
+    optimizer.step(closure)
+  File "/gpfs/home/sgoswam5/apps/ccv_venv/lib/python3.7/site-packages/torch/optim/optimizer.py", line 89, in wrapper
+    return func(*args, **kwargs)
+  File "/gpfs/home/sgoswam5/apps/ccv_venv/lib/python3.7/site-packages/torch/autograd/grad_mode.py", line 27, in decorate_context
+    return func(*args, **kwargs)
+  File "/gpfs/home/sgoswam5/apps/ccv_venv/lib/python3.7/site-packages/torch/optim/adam.py", line 66, in step
+    loss = closure()
+  File "main.py", line 81, in closure
+    loss.backward()
+  File "/gpfs/home/sgoswam5/apps/ccv_venv/lib/python3.7/site-packages/torch/tensor.py", line 245, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/gpfs/home/sgoswam5/apps/ccv_venv/lib/python3.7/site-packages/torch/autograd/__init__.py", line 147, in backward
+    allow_unreachable=True, accumulate_grad=True)  # allow_unreachable flag
+RuntimeError: Trying to backward through the graph a second time, but the saved intermediate results have already been freed. Specify retain_graph=True when calling .backward() or autograd.grad() the first time.
