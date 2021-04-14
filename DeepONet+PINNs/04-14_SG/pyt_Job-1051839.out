@@ -1,0 +1,10 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 1051839
+##  Job Name : job.sbatch
+##  Nodelist : gpu2008
+##      CPUs : 
+##  Mem/Node : 32768 MB
+## Directory : /gpfs/data/gk/sgoswam5/damage/Phase_field/all_steps
+##   Started : Wed Apr 14 15:06:31 EDT 2021
+###############################################################################
+Start training...
