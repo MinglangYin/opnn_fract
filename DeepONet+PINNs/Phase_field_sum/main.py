@@ -57,7 +57,7 @@ def main():
     model = opnn(dim_br, dim_tr).to(device)
     model = model.float()    
     optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
-    train_loss = np.zeros((args.epochs, 1))
+    train_loss = np.zeros((args.epochs, 2))
     
     ## training
     def train(epoch, vDelta, x):
@@ -68,12 +68,13 @@ def main():
 #            u_out, v_out, phi_out = y_out[:, 0], y_out[:, 1], y_out[:, 2]
 #            loss_data = (1e5*(u_out - u[:, 0])**2).mean() + (1e4*(v_out - v[:, 0])**2).mean() + ((phi_out - phi[:, 0])**2).mean()
 #            loss_data = ((u_out - u[:, 0])**2).mean() + ((v_out - v[:, 0])**2).mean() + ((phi_out - phi[:, 0])**2).mean()
-            loss_pde = model.loss_energy(vDelta, x)
+            E = model.loss_energy(vDelta, x)
 
-            print(f"epoch: {epoch}, loss_pde: {loss_pde}")
+            print(f"epoch: {epoch}, Energy: {E}")
 #            print(f"epoch: {epoch}, loss_data: {loss_data}, loss_pde: {loss_pde}")
-            loss = loss_pde #+ 10*loss_data
-            train_loss[epoch, 0] = loss
+            loss = E #+ 10*loss_data
+            train_loss[epoch, 0] = E
+            # train_loss[epoch, 1] = E_c
             loss.backward()
             return loss
         optimizer.step(closure)
@@ -83,7 +84,7 @@ def main():
     tic = time.time()
     for epoch in range(0, epochs):
 
-        if epoch == epochs - 10000:
+        if epoch == epochs - 1000:
             optimizer = torch.optim.LBFGS(model.parameters(), lr = 0.0001)
 
         ## Training
@@ -222,7 +223,8 @@ def main():
     fig = plt.figure(constrained_layout=False, figsize=(6, 6))
     gs = fig.add_gridspec(1, 1)
     ax = fig.add_subplot(gs[0])
-    ax.plot(x, train_loss, color='blue', label='Training Loss')
+    ax.plot(x, train_loss[:, 0], color='blue', label='Strain')
+    # ax.plot(x, train_loss[:, 1], color='red', label='Crack')
 
     ax.set_yscale('log')
     ax.set_ylabel('Loss')

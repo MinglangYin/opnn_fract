@@ -63,7 +63,6 @@ class opnn(nn.Module):
                 in_channels = h_dim
         self._trunk = nn.Sequential(*modules)
         self._out_layer = nn.Linear(self.z_dim, 3, bias = True) 
-        self._pos = nn.ReLU() 
     
     def forward(self, vDelta, x):
 
@@ -81,8 +80,7 @@ class opnn(nn.Module):
         ## Total energy = elastic energy + fracture energy 
         E_e, E_c = self._get_elas_strain_energy(vDelta, x)
         E = (E_e + E_c).mean()
-
-        return E
+        return E #E_e.mean(), E_c.mean()
     
     def _get_elas_strain_energy(self, vDelta, x):
 
