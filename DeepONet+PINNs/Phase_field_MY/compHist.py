@@ -80,9 +80,8 @@ plt.scatter(x[:,0], x[:,1], c=init_hist[:,0])
 plt.savefig('History.png')
 
 hist = np.zeros((14884, 8))
-hist[:,0] = init_hist[:,0]
-for iStep in range(0,7):
-    hist[:,iStep+1] = np.maximum(init_hist[:,0], strain_pos[:,iStep])
+for iStep in range(0,8):
+    hist[:,iStep] = np.maximum(init_hist[:,0], strain_pos[:,iStep])
 
 fig = plt.figure(figsize=(5, 5))
 plt.scatter(x[:,0], x[:,1], c=hist[:,7])

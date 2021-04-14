@@ -30,7 +30,7 @@ def prep_train_test(Param):
 #    num_test = Param['num_test']
 #    num_crackPos = Param['crack_pos']    
     
-    # constB = 92
+    constB = 92
     dataset_all = io.loadmat('dataset.mat')
     x = dataset_all['coord']
     phi = dataset_all['phi_train']
@@ -40,7 +40,7 @@ def prep_train_test(Param):
 
     dataset_hist = io.loadmat('history.mat')
     hist = dataset_hist['hist']
-    # hist[:,0:1] = constB*hist[:,0:1]
+    hist[:,0:1] = constB*hist[:,0:1]
 #    i = 35
 #    fig = plt.figure(figsize=(5, 5))
 #    plt.scatter(x[:,0], x[:,1], c=hist_init[:,i])
