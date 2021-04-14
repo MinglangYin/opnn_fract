@@ -84,7 +84,7 @@ def main():
     tic = time.time()
     for epoch in range(0, epochs):
 
-        if epoch == epochs - 1000:
+        if epoch == epochs - 10000:
             optimizer = torch.optim.LBFGS(model.parameters(), lr = 0.0001)
 
         ## Training
