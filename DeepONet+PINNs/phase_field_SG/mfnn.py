@@ -75,7 +75,7 @@ class opnn(nn.Module):
         v_lift = x[:, 1]*(x[:, 1] - 1)*y_out[:, 1] + x[:, 1]*vDelta[:,0]
         phi_lift = y_out[:, 2]
         
-        return torch.cat([u_lift[:, None], v_lift[:, None], phi_lift[:, None]], axis=1)
+        return torch.cat((u_lift[:, None], v_lift[:, None], phi_lift[:, None]), dim=1)
     
     def loss_energy(self, vDelta, x):
         ## Total energy = elastic energy + fracture energy 

@@ -70,7 +70,7 @@ def main():
 #            loss_data = ((u_out - u[:, 0])**2).mean() + ((v_out - v[:, 0])**2).mean() + ((phi_out - phi[:, 0])**2).mean()
             E = model.loss_energy(vDelta, x)
 
-            print(f"epoch: {epoch}, Energy: {E}")
+            print(f"epoch: {epoch}, Energy: {E}", flush=True)
 #            print(f"epoch: {epoch}, loss_data: {loss_data}, loss_pde: {loss_pde}")
             loss = E #+ 10*loss_data
             train_loss[epoch, 0] = E
