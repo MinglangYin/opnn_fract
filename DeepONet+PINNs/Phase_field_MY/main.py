@@ -233,4 +233,4 @@ def main():
     fig.savefig('./loss_his.png')
     
 if __name__ == "__main__":
-    main()0, 50
+    main()
