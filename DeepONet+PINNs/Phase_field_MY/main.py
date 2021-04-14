@@ -26,8 +26,8 @@ def main():
     batch_size = args.batch_size
     restart = args.restart
 
-    dim_br = [1, 50, 50, 50, 50, 50, 50]
-    dim_tr = [3, 50, 50, 50, 50, 50, 50]
+    dim_br = [1, 50, 50, 50]
+    dim_tr = [3, 50, 50, 50]
     lmd = 0 #1e-5
     num_cols = 122
     num_rows = 122
@@ -233,4 +233,4 @@ def main():
     fig.savefig('./loss_his.png')
     
 if __name__ == "__main__":
-    main()
+    main()0, 50
